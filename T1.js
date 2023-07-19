@@ -6,42 +6,43 @@ async function readmyfile(){
 
     fs.readFile("./api","utf-8",function(err,data){
         resolve(data)
-    }) })
+    }) }) 
   return promise;   
 }
 
 
 
 
-
-
 readmyfile().then(function(data){
-
-  
 
     var links = data.split("\r\n")
  links.forEach(element => {
-  const pro2 = new Promise(function(resolve,reject){
+  return new Promise(function(resolve,reject){
   http.get(element,function(res)
-
   { let data = ""
   
      res.on('data', keys => {
   
       data = data+keys
-        resolve(data)
+      
+       
       //fs.writeFileSync("./api",data)
   
+     })
+     res.on("end",()=>{
+      console.log(data)
+       resolve(data)
      })
        
   })
   
- }).then((data)=> {
-  fs.appendFile("./api3",data+"\n",function(err){})
-  console.log(data)
-});
+ })
    
   })
   
 }
-)
+).then(function(data) {
+  console.log(data)
+  fs.appendFile("./api3",data+"\n",function(err){})
+  
+});
