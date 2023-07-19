@@ -1,31 +1,47 @@
 const fs = require("fs")
 const http = require("https")
+fs.writeFile("./api3","",function(errr){})
+async function readmyfile(){
+  let promise = new Promise(function(resolve,reject){ 
 
-fs.readFile("./api","utf-8",function(err,data){
-  const api = data.split("\r\n")
-console.log(api)
-api.forEach((link)=>{
-  http.get(link,function(res)
+    fs.readFile("./api","utf-8",function(err,data){
+        resolve(data)
+    }) })
+  return promise;   
+}
 
-{ var data = ""
 
-   res.on('data', keys => {
 
-    data = data+keys
 
-    // console.log(data)
-    
-    fs.writeFileSync("./api1",data)
 
-   })
 
+readmyfile().then(function(data){
+
+  
+
+    var links = data.split("\r\n")
+ links.forEach(element => {
+  const pro2 = new Promise(function(resolve,reject){
+  http.get(element,function(res)
+
+  { let data = ""
+  
+     res.on('data', keys => {
+  
+      data = data+keys
+        resolve(data)
+      //fs.writeFileSync("./api",data)
+  
+     })
+       
+  })
+  
+ }).then((data)=> {
+  fs.appendFile("./api3",data+"\n",function(err){})
+  console.log(data)
+});
    
-
-   
-
-   
-
-})
-})
-
-})
+  })
+  
+}
+)
