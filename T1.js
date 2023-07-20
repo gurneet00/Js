@@ -1,31 +1,51 @@
 const fs = require("fs")
 const http = require("https")
+fs.writeFile("./api3","",function(errr){})
+async function readmyfile(){
+  let promise = new Promise(function(resolve,reject){ 
+    fs.readFile("./api","utf-8",function(err,data){
+        resolve(data)
+    }) }) 
+  return promise;   
+}
 
-fs.readFile("./api","utf-8",function(err,data){
-  const api = data.split("\r\n")
-console.log(api)
-api.forEach((link)=>{
-  http.get(link,function(res)
 
-{ var data = ""
+readmyfile().then(
+  function(data){
+    var links = data.split("\r\n")
+    // return new Promise( (resolve, reject) =>{
+    //   resolve("hellooo")
+    // } )
+    var arr=[];
+    console.log(links.length)
+    for(var i = 0 ; i< links.length ; i++ ){
 
-   res.on('data', keys => {
 
-    data = data+keys
-
-    // console.log(data)
-    
-    fs.writeFileSync("./api1",data)
-
-   })
-
+     
+     var pro2= new Promise(function(resolve,reject){
+        http.get(links[i],function(res)
+        { let data = ""
+           res.on('data', keys => {
+            data = data+keys
+            //fs.writeFileSync("./api",data)
+           })
+           res.on("end",()=>{
+             resolve(data)
+           })   
+        })
+       })
+       
+       arr.push(pro2)
+       
    
-
-   
-
-   
-
-})
-})
-
-})
+      }
+   return Promise.all(arr)
+}
+).then(function(data) {
+for(var files=0;files<data.length;files++){
+  fs.writeFile("./apidata"+files,data[files],function(err){})
+}
+  
+}).catch((err)=>{
+  console.log("err")
+});
