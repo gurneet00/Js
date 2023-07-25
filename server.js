@@ -5,7 +5,7 @@ const receptor = function(request , response){
     const method = request.method;
     if(url==='/'){
     response.writeHead(200,{
-        "Content-Type":"text/html"
+        "Content-Type":"text/html" 
     });
 fs.readFile("./index.html","utf-8",function(err,data){
     response.end(data)
