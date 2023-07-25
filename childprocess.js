@@ -1,6 +1,7 @@
 const childProcess = require('child_process')
-
-const command = childProcess.spawn("cmd",['/c','dir'])
+const prompt = require('prompt-sync')()
+const cmd = prompt()
+const command = childProcess.spawn(cmd)
 console.log(process.platform)
 
 command.stdout.on('data',function(data){
