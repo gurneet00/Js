@@ -1,13 +1,45 @@
-const promise1 = Promise.resolve(3);
-const promise2 = 42;
-const promise3 = new Promise((resolve, reject) => {
-  setTimeout(resolve, 100, 'foo');
-});
-let arr=[]
-arr.push(promise1)
-arr.push(promise2)
-console.log(arr)
-Promise.all(arr).then((values) => {
-  console.log(values);
-});
-// Expected output: Array [3, 42, "foo"]
+const fs=require("fs");
+const http=require("http");
+const axios = require('axios')
+const arr=[];
+function read(){
+    return new Promise(function(resolve,reject){
+    fs.readFile("link.txt","utf8",function (err,data){
+        if(err){
+           reject(err);
+        }
+        else {
+          resolve(data);
+        }
+    })
+})
+}
+
+function write(value,data){
+    fs.writeFile(`txt${value}`,data,function(err){
+        if(err){
+            console.log(err)
+        }
+        else{
+            console.log(value,"done");
+        }
+    })
+}
+read().then((data)=>{
+    if(data){
+    let str=data;
+str=str.split("\n");
+for(let i=0;i<str.length;i++){
+    axios.get(str[i])
+       .then(res => {
+       write(i,res.data);
+       })
+       .catch(err => console.log(err))
+}
+    }
+    else{
+        console.log("file is empty");
+    }
+}).catch((err)=>{
+    console.log(err);
+})

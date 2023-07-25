@@ -1,7 +1,7 @@
 const fs = require("fs")
 const http = require("https")
-fs.writeFile("./api3","",function(errr){})
-async function readmyfile(){
+
+function readmyfile(){
   let promise = new Promise(function(resolve,reject){ 
     fs.readFile("./api","utf-8",function(err,data){
         resolve(data)
@@ -42,6 +42,7 @@ readmyfile().then(
    return Promise.all(arr)
 }
 ).then(function(data) {
+  console.log(data)
 for(var files=0;files<data.length;files++){
   fs.writeFile("./apidata"+files,data[files],function(err){})
 }
