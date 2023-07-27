@@ -7,8 +7,9 @@ const receptor = function(request , response){
     response.writeHead(200,{
         "Content-Type":"text/html" 
     });
-    response.end("todo.html")
-}else if(url==='/todo'&& method==='POST'){
+fs.readFile("./index.html","utf-8",function(err,data){
+    response.end(data)
+})   }else if(url==='/todo'&& method==='POST'){
     response.end("45")
 }else if(url==='/todo'&& method==='GET'){
     response.end("4fddf5")}
