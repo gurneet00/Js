@@ -37,8 +37,8 @@
       var item = document.createElement('li')
       item.textContent=input.value
       messages.appendChild(item)
-      item.style.textAlign="left"
-      // input.value = '';
+      item.style.textAlign="right"
+      input.value = '';
     }
   });
 
@@ -47,7 +47,7 @@
     var item = document.createElement('li')
     item.textContent=msg;
     messages.appendChild(item)
-    item.style.textAlign="right"
+    item.style.textAlign="left"
 
   })
 </script>
