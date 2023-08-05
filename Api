@@ -1,8 +1,60 @@
-https://catfact.ninja/fact
-https://catfact.ninja/fact
-https://catfact.ninja/fact
-https://catfact.ninja/fact
-https://catfact.ninja/fact
-https://catfact.ninja/fact
-https://catfact.ninja/fact
-https://catfact.ninja/fact
+const addQuestionsToSegment = async (e) =>{
+				$(".addQuestionToSegment-btn").prop('disabled',true);
+				let questionIdsArray = ["647450002ec1d5aa61e9c375"];
+
+				
+
+				console.log('selected length: ',questionIdsArray.length);
+				if(questionIdsArray.length==0){
+					$(".error-modal-alert").hide();
+					$(".error-modal-alert").html(`<i class="fa fa-warning"></i> Please select at-least one question.`);
+					$(".error-modal-alert").show();
+					$(".addQuestionToSegment-btn").prop('disabled',false);
+					setTimeout(function () { 
+						$(".error-modal-alert").fadeOut()
+					},3000)
+					return;
+				}
+                let pollNumber = $(e).parent().parent().find('#randomCount').val() || 0;
+				    pollNumber = parseInt(pollNumber);
+				let OldContentCount = $(e).parent().parent().find('#randomCount').attr('contentLength') || 0;
+				let totalContentCount = parseInt(OldContentCount) + questionIdsArray.length; 
+
+				if(isPoolQuestion) {
+				    if(pollNumber == 0 || pollNumber>totalContentCount){
+						$(".error-modal-alert").hide();
+						console.log(pollNumber)
+					    $(".error-modal-alert").html(`${ pollNumber ? '<i class="fa fa-warning"></i> Random questions count must be less then Content length.' : '<i class="fa fa-warning"></i> Random questions count must be greater then zero.'}`);
+					    $(".error-modal-alert").show();
+						$("#randomCount").focus();
+						$("#randomCount").addClass('danger');
+					    $(".addQuestionToSegment-btn").prop('disabled',false);
+					    setTimeout(function () { 
+					    	$(".error-modal-alert").fadeOut()
+					    },3000)
+					    return;
+					}
+				}
+                questionIdsArray = questionIdsArray.reverse()
+
+				const data = {
+					selectedIds: JSON.stringify(questionIdsArray),
+					segmentCount:currentSegementCount.toString(),
+					quizId:quizIdd,
+					isPoolQuestion,
+				}
+
+				if(isPoolQuestion)
+				    data.pollNumber = pollNumber;
+
+				const rawResponse = await fetch(`/test/addCourseContent/addContentInSegment`,{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(data)
+				})
+
+				const response = await rawResponse.json();
+				window.location.href = `/test/addQuizContent/${quizIdd}?segmentAdd=${currentSegementCount}`
+			}
