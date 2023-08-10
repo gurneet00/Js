@@ -3,7 +3,7 @@ const app = express();
 const server = require('http').createServer(app);
 // const { Server } = require("socket.io");
 const socketServer = require("socket.io")(server);
-
+const userBase = require("./Dbase/users");
 server.listen(3000, () => {
     console.log("Listening on port 3000");
 });
@@ -24,10 +24,20 @@ socketServer.on("connection", (socket) => {
     });
 
     socket.on("Connected userName",(userName)=>{
-        console.log(userName)
+        let userData = userBase.getUser(userName);
+        console.log(userData) 
+        
+        if(!userData){
+            userData=userBase.setUser(socket,userName,"Nickname")  
+            console.log("No data")
+        }
+
+        //socket.emit("user updated",userData)
     })
     socket.on('chat message', (msg) => {
         console.log("Message from client:", msg);
         socket.broadcast.emit("chat from server", msg);
     });
 });
+
+
