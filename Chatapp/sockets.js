@@ -23,21 +23,37 @@ socketServer.on("connection", (socket) => {
         console.log("User disconnected");
     });
 
-    socket.on("Connected userName",(userName)=>{
-        let userData = userBase.getUser(userName);
-        console.log(userData) 
-        
-        if(!userData){
-            userData=userBase.setUser(socket,userName,"Nickname")  
-            console.log("No data")
-        }
-
-        //socket.emit("user updated",userData)
+    socket.on("Connected userName",UpdateConnectUser(socket))
+    socket.on("update user",function(userData){
+        console.log(userData)
+        userBase.setUser(socket,userData.userName,userData.nickName)
+        //UpdateConnectUser(socket,)
     })
+
+
+
     socket.on('chat message', (msg) => {
         console.log("Message from client:", msg);
         socket.broadcast.emit("chat from server", msg);
     });
 });
 
+function UpdateConnectUser(socket){
+
+    return function(userName){
+    let userData = userBase.getUser(userName);
+    //console.log(userData) 
+    
+    if(!userData){
+        userData=userBase.setUser(socket,userName)  
+        console.log(userData)
+    }
+    
+    
+    socket.emit("user updated",userData.Data.nickName)
+    
+
+}
+    
+}
 
