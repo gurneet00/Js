@@ -1,0 +1,17 @@
+{
+  "name": "gurneet-",
+  "version": "0.0.1",
+  "main": "T1.js",
+  "dependencies": {
+    "area-of-square": "^1.0.1",
+    "prompt-sync": "^4.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
