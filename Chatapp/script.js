@@ -3,6 +3,24 @@ var socket = io();
   var userName = document.getElementById('userName');
   var submitButton = document.getElementById('submit');
   const userNickNameLabel = document.getElementById('nickNameLabel')
+  const searchfriend = document.getElementById('search friend')
+  const searchbutton = document.getElementById('search')
+  const friendNameLabel = document.getElementById("friendNameLabel")
+searchbutton.addEventListener("click",function(){
+  const friendName = searchfriend.value;
+  socket.emit("search friend",friendName);
+})
+
+socket.on("search friend",function(friendData){
+  if(friendData){
+    friendNameLabel.innerText=friendData.nickName;
+  }
+  else{
+    friendNameLabel.innerText="No friend";
+  }
+})
+
+
 
   submitButton.addEventListener("click",()=>{
       socket.emit("Connected userName",userName.value)

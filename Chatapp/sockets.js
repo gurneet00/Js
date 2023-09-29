@@ -29,7 +29,9 @@ socketServer.on("connection", (socket) => {
         userBase.setUser(socket,userData.userName,userData.nickName)
         //UpdateConnectUser(socket,)
     })
-
+    socket.on("search friend",function(friendName){
+        searchfriend(friendName,socket)
+    })
 
 
     socket.on('chat message', (msg) => {
@@ -51,9 +53,12 @@ function UpdateConnectUser(socket){
     
     
     socket.emit("user updated",userData.Data.nickName)
-    
 
 }
     
 }
 
+function searchfriend(friendName,socket){
+    const friendData = userBase.getUser(friendName)
+            socket.emit("search friend",friendData?.Data)
+}
