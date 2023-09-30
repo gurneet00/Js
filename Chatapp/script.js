@@ -96,12 +96,11 @@ socket.on("search friend",function(friendData){
  }
 
  const chatList={};
+ let body;
 socket.on('chat message',function(ChatData){
-  console.log(ChatData)
-  let body;
 if(!chatList[ChatData.sendBy]){
-chatList[ChatData.friendName]=true;
-
+chatList[ChatData.sendBy]=true;
+console.log(chatList);
 const chatNode = document.createElement("div")
 chatNode.style.position= "fixed";
 chatNode.style.bottom='0px';
@@ -112,7 +111,7 @@ chatNode.style.border='black';
 chatNode.style.backgroundColor='white';
 chatNode.style.flexDirection='column';
 
-const chatHead = document.createElement('div');
+    const chatHead = document.createElement('div');
     chatHead.style.height='30px';
     chatHead.style.backgroundColor='grey';
     chatHead.style.display='flex';
@@ -156,7 +155,7 @@ const chatHead = document.createElement('div');
 
     body=chatBody;
 }
-else{
+
 const chatMessageNode = document.createElement('div');
 chatMessageNode.style.display='flex';
 chatMessageNode.style.justifyContent='flex-start';
@@ -165,10 +164,10 @@ chatMessageNode.style.margin='10px';
 
 const chatMessageLabel = document.createElement('label');
 chatMessageLabel.innerText=ChatData.msg;
-
+console.log(body)
 chatMessageNode.appendChild(chatMessageLabel);
  body.appendChild(chatMessageNode);
-}
+
 })
 
 
