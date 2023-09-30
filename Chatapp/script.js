@@ -1,11 +1,11 @@
 var socket = io();
-  let user;
-  var userName = document.getElementById('userName');
-  var submitButton = document.getElementById('submit');
-  const userNickNameLabel = document.getElementById('nickNameLabel')
-  const searchfriend = document.getElementById('search friend')
-  const searchbutton = document.getElementById('search')
-  const friendNameLabel = document.getElementById("friendNameLabel")
+let user;
+var userName = document.getElementById('userName');
+var submitButton = document.getElementById('submit');
+const userNickNameLabel = document.getElementById('nickNameLabel')
+const searchfriend = document.getElementById('search friend')
+const searchbutton = document.getElementById('search')
+const friendNameLabel = document.getElementById("friendNameLabel")
 searchbutton.addEventListener("click",function(){
   const friendName = searchfriend.value;
   socket.emit("search friend",friendName);
@@ -22,7 +22,8 @@ socket.on("search friend",function(friendData){
     friendNameLabel.innerText="No friend";
   }
 })
- function startChat(friendData){
+
+function startChat(friendData){
   const chatBox = document.getElementById('chatBox');
   //chatBox="";
   const chatbutton = document.createElement("button")
@@ -93,79 +94,79 @@ socket.on("search friend",function(friendData){
     })
   })
 
- }
-
- const chatList={};
- let body;
-socket.on('chat message',function(ChatData){
-if(!chatList[ChatData.sendBy]){
-chatList[ChatData.sendBy]=true;
-console.log(chatList);
-const chatNode = document.createElement("div")
-chatNode.style.position= "fixed";
-chatNode.style.bottom='0px';
-chatNode.style.right='0px'
-chatNode.style.height='300px';
-chatNode.style.width='300px';
-chatNode.style.border='black';
-chatNode.style.backgroundColor='white';
-chatNode.style.flexDirection='column';
-
-    const chatHead = document.createElement('div');
-    chatHead.style.height='30px';
-    chatHead.style.backgroundColor='grey';
-    chatHead.style.display='flex';
-    chatHead.style.justifyContent='space-between';
-    chatHead.style.alignItems='center';
-
-    const chatHeadLabel = document.createElement('label');
-    chatHeadLabel.innerText=ChatData.friendName;
-
-    const chatCloseButton = document.createElement('button');
-    chatCloseButton.innerText='X';
-
-    const chatBody = document.createElement('div');
-    chatBody.style.height='200px';
-    chatBody.style.backgroundColor='white';
-    chatBody.style.flexGrow='1';
-    chatBody.style.overflowY='scroll';
-
-    const chatFooter = document.createElement('div');
-    chatFooter.style.height='30px';
-    chatFooter.style.backgroundColor='grey';
-    chatFooter.style.display='flex';
-    chatFooter.style.justifyContent='space-between';
-    chatFooter.style.alignItems='center';
-
-    const chatFooterInput = document.createElement('input');
-    chatFooterInput.style.flexGrow='1';
-
-    const chatFotterSend = document.createElement('button');
-    chatFotterSend.innerText='SEND';
-
-    chatHead.appendChild(chatHeadLabel);
-    chatHead.appendChild(chatCloseButton);
-
-    chatFooter.appendChild(chatFooterInput);
-    chatFooter.appendChild(chatFotterSend);
-
-    chatBox.appendChild(chatHead);
-    chatBox.appendChild(chatBody);
-    chatBox.appendChild(chatFooter);
-
-    body=chatBody;
 }
 
-const chatMessageNode = document.createElement('div');
-chatMessageNode.style.display='flex';
-chatMessageNode.style.justifyContent='flex-start';
-chatMessageNode.style.alignItems='center';
-chatMessageNode.style.margin='10px';
+const chatList={};
+let body;
+socket.on('chat message',function(ChatData){
+  if(!chatList[ChatData.sendBy]){
+   chatList[ChatData.sendBy]=true;
+   console.log(chatList);
+   const chatNode = document.createElement("div")
+   chatNode.style.position= "fixed";
+   chatNode.style.bottom='0px';
+   chatNode.style.right='0px'
+   chatNode.style.height='300px';
+   chatNode.style.width='300px';
+   chatNode.style.border='black';
+   chatNode.style.backgroundColor='white';
+   chatNode.style.flexDirection='column';
 
-const chatMessageLabel = document.createElement('label');
-chatMessageLabel.innerText=ChatData.msg;
-console.log(body)
-chatMessageNode.appendChild(chatMessageLabel);
+   const chatHead = document.createElement('div');
+   chatHead.style.height='30px';
+   chatHead.style.backgroundColor='grey';
+   chatHead.style.display='flex';
+   chatHead.style.justifyContent='space-between';
+   chatHead.style.alignItems='center';
+
+   const chatHeadLabel = document.createElement('label');
+   chatHeadLabel.innerText=ChatData.friendName;
+
+   const chatCloseButton = document.createElement('button');
+   chatCloseButton.innerText='X';
+
+   const chatBody = document.createElement('div');
+   chatBody.style.height='200px';
+   chatBody.style.backgroundColor='white';
+   chatBody.style.flexGrow='1';
+   chatBody.style.overflowY='scroll';
+
+   const chatFooter = document.createElement('div');
+   chatFooter.style.height='30px';
+   chatFooter.style.backgroundColor='grey';
+   chatFooter.style.display='flex';
+   chatFooter.style.justifyContent='space-between';
+   chatFooter.style.alignItems='center';
+
+   const chatFooterInput = document.createElement('input');
+   chatFooterInput.style.flexGrow='1';
+
+   const chatFotterSend = document.createElement('button');
+   chatFotterSend.innerText='SEND';
+
+   chatHead.appendChild(chatHeadLabel);
+   chatHead.appendChild(chatCloseButton);
+
+   chatFooter.appendChild(chatFooterInput);
+   chatFooter.appendChild(chatFotterSend);
+
+   chatBox.appendChild(chatHead);
+   chatBox.appendChild(chatBody);
+   chatBox.appendChild(chatFooter);
+
+   body=chatBody;
+ }
+
+ const chatMessageNode = document.createElement('div');
+ chatMessageNode.style.display='flex';
+ chatMessageNode.style.justifyContent='flex-start';
+ chatMessageNode.style.alignItems='center';
+ chatMessageNode.style.margin='10px';
+
+ const chatMessageLabel = document.createElement('label');
+ chatMessageLabel.innerText=ChatData.msg;
+ console.log(body)
+ chatMessageNode.appendChild(chatMessageLabel);
  body.appendChild(chatMessageNode);
 
 })
@@ -174,29 +175,29 @@ chatMessageNode.appendChild(chatMessageLabel);
 
 
 
-  submitButton.addEventListener("click",()=>{
-      socket.emit("Connected userName",userName.value)
-     console.log(userName.value)
-  })
+submitButton.addEventListener("click",()=>{
+  socket.emit("Connected userName",userName.value)
+  console.log(userName.value)
+})
 
 
-  socket.on("connect",()=>{
-    console.log("User connected")
+socket.on("connect",()=>{
+  console.log("User connected")
     
-  })
+})
 
-  socket.on("user updated",function(nickName){
-    console.log("aaaaaaaa"+nickName)
-    if(!nickName){
-      const nickName=prompt("Enter NickName")
-      console.log(nickName)
-      if(nickName){
+socket.on("user updated",function(nickName){
+  console.log("aaaaaaaa"+nickName)
+  if(!nickName){
+    const nickName=prompt("Enter NickName")
+    console.log(nickName)
+    if(nickName){
         user=userName.value;
         socket.emit("update user",{nickName:nickName, userName:userName.value})
         
-      }
     }
-    userNickNameLabel.innerText=nickName
-  })
+  }
+  userNickNameLabel.innerText=nickName
+})
 
   

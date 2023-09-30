@@ -43,25 +43,26 @@ socketServer.on("connection", (socket) => {
 function UpdateConnectUser(socket){
 
     return function(userName){
-    let userData = userBase.getUser(userName);
-    //console.log(userData) 
+       let userData = userBase.getUser(userName);
+        //console.log(userData) 
     
-    if(!userData){
-        userData=userBase.setUser(socket,userName)  
-      //  console.log(userData)
-    }
+        if(!userData){
+           userData=userBase.setUser(socket,userName)  
+           //  console.log(userData)
+        }
     
     
-    socket.emit("user updated",userData.Data.nickName)
+        socket.emit("user updated",userData.Data.nickName)
 
-}
+    }
     
 }
 
 function searchfriend(friendName,socket){
     const friendData = userBase.getUser(friendName)
-            socket.emit("search friend",friendData?.Data)
+    socket.emit("search friend",friendData?.Data)
 }
+
 function handleChatMessage(ChatData){
     const friendData=userBase.getUser(ChatData.friendName);
     
