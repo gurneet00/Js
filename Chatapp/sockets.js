@@ -25,7 +25,7 @@ socketServer.on("connection", (socket) => {
 
     socket.on("Connected userName",UpdateConnectUser(socket))
     socket.on("update user",function(userData){
-        console.log(userData)
+      //  console.log(userData)
         userBase.setUser(socket,userData.userName,userData.nickName)
         //UpdateConnectUser(socket,)
     })
@@ -34,9 +34,9 @@ socketServer.on("connection", (socket) => {
     })
 
 
-    socket.on('chat message', (msg) => {
-        console.log("Message from client:", msg);
-        socket.broadcast.emit("chat from server", msg);
+    socket.on('chat message', (ChatData) => {
+        console.log("Message from client:", ChatData);
+        handleChatMessage(ChatData);
     });
 });
 
@@ -48,7 +48,7 @@ function UpdateConnectUser(socket){
     
     if(!userData){
         userData=userBase.setUser(socket,userName)  
-        console.log(userData)
+      //  console.log(userData)
     }
     
     
@@ -61,4 +61,9 @@ function UpdateConnectUser(socket){
 function searchfriend(friendName,socket){
     const friendData = userBase.getUser(friendName)
             socket.emit("search friend",friendData?.Data)
+}
+function handleChatMessage(ChatData){
+    const friendData=userBase.getUser(ChatData.friendName);
+    
+    friendData.connection.emit('chat message',ChatData)
 }
