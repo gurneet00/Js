@@ -65,6 +65,6 @@ function searchfriend(friendName,socket){
 
 function handleChatMessage(ChatData){
     const friendData=userBase.getUser(ChatData.friendName);
-    
+    console.log("68", ChatData )
     friendData.connection.emit('chat message',ChatData)
 }
